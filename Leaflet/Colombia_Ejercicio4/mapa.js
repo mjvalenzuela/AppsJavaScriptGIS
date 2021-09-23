@@ -33,10 +33,6 @@ function popup(feature,layer){
     }
 }
 
-// Agregar capa en formato GeoJson
-var barriosJS = L.geoJson(barrios,{
-    onEachFeature: popup
-}).addTo(map);
 
 // Agregar coordenadas para dibujar una polilinea
 var coord_camino = [
@@ -117,3 +113,94 @@ const legend = L.control.Legend({
             weight: 2
         }]
 }).addTo(map);
+
+// Agregar control para ver los datos al pasar el puntero
+
+var info = L.control();
+
+// Crear un div con una clase info
+info.onAdd = function(map){
+    this._div = L.DomUtil.create('div','info');
+    this.update();
+    return this._div;
+};
+
+// Agregar el metodo que actualiza el control segun el puntero vaya pasando
+info.update = function(props){
+    this._div.innerHTML = '<h4>Total Viviendas por Barrio</h4>' + 
+                            (props ? '<b>' + props.BARRIO + '</b><br/>' + props.TOT_VIVIEN + ' viviendas</sup>'
+                            : 'Pase el puntero por un barrio');
+};
+
+info.addTo(map);
+
+// Generar rangos de colores de acuerdo con el atributo o campo TOT_VIVIEN
+function getColor(d){
+    return  d > 9000 ? '#2510a3' :
+            d > 7500 ? '#0000ff' :
+            d > 6000 ? '#673dff' :
+            d > 4500 ? '#9265ff' :
+            d > 2500 ? '#b38bff' :
+            d > 1000 ? '#cfb1ff' :
+            d > 0    ? '#e8d8ff' :
+                       '#ffffff';
+}
+
+// Crear la funcion para mostrar la simbologia de acuerdo al campo TOT_VIVIEN
+
+function style(feature){
+    return {
+        fillColor: getColor(feature.properties.TOT_VIVIEN),
+        weight: 2,
+        opacity: 1,
+        color: 'white',
+        dashArray: '3',
+        fillOpacity: 0.7
+    };
+}
+
+// AGregar interaccion del puntero con la capa para resaltar el objeto
+function highlightFeature(e) {
+    var layer = e.target;
+
+    layer.setStyle({
+        weight: 5,
+        color: '#666',
+        dashArray: '',
+        fillOpacity: 0.7
+    });
+
+    info.update(layer.feature.properties);
+}
+
+// Configurar los cambios de resaltado y zoom de la capa
+
+var barriosJS;
+
+function resetHighlight(e){
+    barriosJS.resetStyle(e.target);
+    info.update();
+}
+
+function zoomToFeature(e){
+    map.fitBounds(e.target.getBounds());
+}
+
+function onEachFeature(feature, layer){
+    layer.on({
+        mouseover: highlightFeature,
+        mouseout: resetHighlight,
+        click: zoomToFeature
+    });
+}
+
+
+
+// Agregar capa en formato GeoJson
+barriosJS = L.geoJson(barrios,{
+    style: style,
+    onEachFeature: onEachFeature
+}).addTo(map);
+
+// Agregar atribucion
+map.attributionControl.addAttribution('Viviendas en Bogotá &copy; <a href="https://www.dane.gov.co/">DANE</a>');
