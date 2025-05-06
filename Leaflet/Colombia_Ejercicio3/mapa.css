@@ -1,0 +1,15 @@
+#map {
+    height: 80vh;
+    width: 100hw;
+}
+
+h1{
+    color:darkblue;
+    font-family: Verdana;
+    text-align: center;
+}
+
+select{
+    margin-bottom: 20px;
+    margin-left: 20px;
+}

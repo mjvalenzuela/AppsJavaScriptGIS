@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Sitios Turisticos de Colombia</title>
+	 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+   		integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+   		crossorigin=""/>		
+	<link rel="stylesheet" type="text/css" href="mapa.css"/>	
+
+	<h1>Visita los sitios turisticos de Colombia</h1>
+	<select name="select-location" id="select-location">
+		<option value="-1">Seleccione un lugar:</option>
+		<option value="6.636254,-73.223129">Barichara-Santander</option>
+		<option value="12.19602,-72.147218">Cabo de la Vela-La Guajira</option>	
+		<option value="10.42278,-75.539217">Castillo San Felipe Cartagena-Bolivar</option>
+		<option value="2.265124,-73.794523">Caño Cristales-Meta</option>
+		<option value="3.233851,-75.168934">Desierto de Tatacoa-Huila</option>
+		<option value="6.233825,-75.167062">Guatape-Antioquia</option>
+		<option value="4.945885,-73.825740">Guatavita-Cundinamarca</option>
+		<option value="2.135151,-76.410226">Parque Purace-Cauca</option>		
+		<option value="1.888593,-76.295127">San Agustín-Huila</option>		
+		<option value="5.638118,-73.526864">Villa de Leiva-Boyacá</option>			
+	</select>
+	<div id="map"></div>
+
+</head>
+<body>	
+
+	<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+   		integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+   		crossorigin=""></script>   		
+	
+	<script src="mapa.js"></script>
+</body>
+</html>
